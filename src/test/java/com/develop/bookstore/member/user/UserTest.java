@@ -11,9 +11,11 @@ class UserTest {
 
     @Test
     void setPhoneNumber() {
-        User user1 = new User("TEST1", "테스트1", "test1@naver.com", "test1", "남", 20000101, "010-1234-5678", ELoginPlatform.NONE);
+        User user1 = new User("TEST1", "테스트1", "test1@naver.com", "test1", "남", 20000101,
+            "010-1234-5678","", "", ELoginPlatform.NONE);
         User user2 = new User("TEST2", "테스트2", "test2", 20001231, ELoginPlatform.NONE);
-        User user3 = new User("TEST3", "테스트3", "test3@naver.com", "test3", "남", 20000101, "010-9999-9999", ELoginPlatform.NONE);
+        User user3 = new User("TEST3", "테스트3", "test3@naver.com", "test3", "남", 20000101,
+            "010-9999-9999","", "",  ELoginPlatform.NONE);
         user1.setPhoneNumber("010-1111-1111");
         user2.setPhoneNumber("010-2222-2222");
 
@@ -51,11 +53,14 @@ class UserTest {
 
     @Test
     void getPhoneNumber() {
-        User user1 = new User("TEST1", "테스트1", "test1@naver.com", "test1", "남", 20000101, "010-1234-5678", ELoginPlatform.NONE);
-        User user2 = new User("TEST2", "테스트2", "test2@naver.com", "test2", "여", 20001231, "", ELoginPlatform.NONE);
+        User user1 = new User("TEST1", "테스트1", "test1@naver.com", "test1", "남", 20000101,
+            "010-1234-5678","", "", ELoginPlatform.NONE);
+        User user2 = new User("TEST2", "테스트2", "test2@naver.com", "test2", "여", 20001231,
+            "", "", "", ELoginPlatform.NONE);
 
         assertThrows(NotFormatMatchException.class, () ->
-            new User("TEST3", "테스트3", "test3@naver.com", "test3", "여", 20001231, "010-9876-543@", ELoginPlatform.NONE));
+            new User("TEST3", "테스트3", "test3@naver.com", "test3", "여", 20001231,
+                "010-9876-543@","", "", ELoginPlatform.NONE));
         assertEquals(user1.getPhoneNumber(), "010-1234-5678");
         assertEquals(user2.getPhoneNumber(), null);
     }

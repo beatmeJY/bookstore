@@ -59,6 +59,14 @@ public class User extends DefaultEntity {
     @Column
     private String gender;
 
+    // 주소
+    @Column
+    private String address;
+
+    // 상세주소
+    @Column
+    private String addressDetail;
+
     // 전화번호 처음
     @Column
     @Getter(AccessLevel.PRIVATE)
@@ -83,11 +91,14 @@ public class User extends DefaultEntity {
     /**
      * 전체 생성자
      */
-    public User(String userId, String userName, String email, String password, String gender, Integer birthDay, String phoneNumber, ELoginPlatform eLoginPlatform) {
+    public User(String userId, String userName, String email, String password, String gender, Integer birthDay, String phoneNumber,
+            String address, String addressDetail, ELoginPlatform eLoginPlatform) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.password = password;
+        this.address = address;
+        this.addressDetail = addressDetail;
         this.gender = gender;
         this.eLoginPlatform = eLoginPlatform;
         setBirthDay(birthDay);

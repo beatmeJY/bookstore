@@ -1,8 +1,8 @@
 package com.develop.bookstore.member.user;
 
 import com.develop.bookstore.member.user.staticdata.ELoginPlatform;
-import com.develop.defalut.entity.DefaultEntity;
-import com.develop.defalut.exception.NotFormatMatchException;
+import com.develop.bookstore.defalut.entity.DefaultEntity;
+import com.develop.bookstore.defalut.exception.NotFormatMatchException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,19 +18,23 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 @Entity
-@Table(name = "user")
+@Table(name = "member_user")
 @Getter @Setter
 @NoArgsConstructor
 public class User extends DefaultEntity {
 
-    // 유저 ID
+    // 사용자 ID
     @Id
     @Column
     private String userId;
 
-    // 이름
+    // 사용자 이름
     @Column(nullable = false)
     private String userName;
+
+    // 사용자 이름
+    @Column(nullable = false)
+    private String nickName;
 
     // 비밀번호
     @Column(nullable = false)
@@ -67,23 +71,23 @@ public class User extends DefaultEntity {
     @Column
     private String addressDetail;
 
-    // 전화번호 처음
+    // 전화번호 처음자리
     @Column
     @Getter(AccessLevel.PRIVATE)
     private String phoneNumber1;
 
-    // 전화번호 중간
+    // 전화번호 중간자리
     @Column
     @Getter(AccessLevel.PRIVATE)
 
     private String phoneNumber2;
 
-    // 전화번호 마지막
+    // 전화번호 끝자리
     @Column
     @Getter(AccessLevel.PRIVATE)
     private String phoneNumber3;
 
-    // 로그인 플랫폼
+    // 가입 플랫폼
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ELoginPlatform eLoginPlatform;
@@ -91,10 +95,11 @@ public class User extends DefaultEntity {
     /**
      * 전체 생성자
      */
-    public User(String userId, String userName, String email, String password, String gender, Integer birthDay, String phoneNumber,
+    public User(String userId, String userName, String nickName, String email, String password, String gender, Integer birthDay, String phoneNumber,
             String address, String addressDetail, ELoginPlatform eLoginPlatform) {
         this.userId = userId;
         this.userName = userName;
+        this.nickName = nickName;
         this.email = email;
         this.password = password;
         this.address = address;
@@ -108,9 +113,10 @@ public class User extends DefaultEntity {
     /**
      * 필수 값 생성자
      */
-    public User(String userId, String userName, String password, Integer birthDay, ELoginPlatform eLoginPlatform) {
+    public User(String userId, String userName, String nickName, String password, Integer birthDay, ELoginPlatform eLoginPlatform) {
         this.userId = userId;
         this.userName = userName;
+        this.nickName = nickName;
         this.password = password;
         this.eLoginPlatform = eLoginPlatform;
         setBirthDay(birthDay);

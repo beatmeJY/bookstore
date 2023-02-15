@@ -1,0 +1,11 @@
+spring:
+  mail:
+    username:  #네이버 아이디
+    password:  #네이버 비밀번호
+  datasource:
+    url: jdbc:postgresql://IP:5432/DB명
+    username: postgres
+    password: #비밀번호
+    driver-class-name: org.postgresql.Driver
+
+

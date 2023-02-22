@@ -18,7 +18,6 @@ public class UserInfoAuthController {
 
     private final EmailAuthService emailAuthService;
 
-
     @RequestMapping("/sendAuthMail")
     public void sendAuthMail(@RequestBody EmailAuthDTO emailAuthDTO){
         log.info("emailAuthDTO : {} ", emailAuthDTO);

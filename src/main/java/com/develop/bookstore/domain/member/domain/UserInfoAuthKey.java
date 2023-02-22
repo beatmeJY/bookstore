@@ -43,7 +43,7 @@ public class UserInfoAuthKey extends DefaultEntity {
     private String authCompleteYn;
 
     @ManyToOne
-    @JoinColumn(name = "user_info_id", referencedColumnName = "user_info_id")
+    @JoinColumn(name = "user_info_id")
     private UserInfo userInfo;
 
 }

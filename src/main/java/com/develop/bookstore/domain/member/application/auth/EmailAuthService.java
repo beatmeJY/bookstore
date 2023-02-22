@@ -1,7 +1,7 @@
 package com.develop.bookstore.domain.member.application.auth;
 
 import com.develop.bookstore.domain.member.api.MemberToMailClient;
-import com.develop.bookstore.domain.member.model.dto.EmailAuthDTO;
+import com.develop.bookstore.domain.member.dto.EmailAuthDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

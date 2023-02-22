@@ -8,31 +8,30 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     format_sql: true
+#    generate-ddl: true
     hibernate:
       ddl-auto: update
 
-#    generate-ddl: true
-#  task:
-#    scheduling:
-#      pool:
-#        size: 50
-#      thread-name-prefix: test
   mail:
-    host: smtp.naver.com #smtp 서버 주소
-    port: 465 # 메일 인증서버 포트
+#    host: smtp.naver.com #smtp 네이버 서버 주소
+#    port: 465 # 메일 인증서버 포트 :smtp
+    host: smtp.gmail.com #smtp 구글 서버 주소
+    port: 587 # 메일 인증서버 포트 :smtps
+    protocol: smtps
     properties:
       mail:
         smtp:
           starttls:
             enable: true
-#            required: true
           auth: true
-#          connectiontimeout: 5000
-#          timeout: 5000
-#          writetimeout: 5000
           ssl:
-#trust: smtp.naver.com
             enable: true #반드시 필요 -> SSL 필요로 되어있으면
+
+#  task:
+#    scheduling:
+#      pool:
+#        size: 50
+#      thread-name-prefix: test
 
 logging:
   level:

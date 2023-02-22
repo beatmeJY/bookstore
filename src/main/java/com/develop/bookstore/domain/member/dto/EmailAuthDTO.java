@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.member.model.dto;
+package com.develop.bookstore.domain.member.dto;
 
 
 public record EmailAuthDTO(String email, String authKey) {

@@ -1,4 +1,4 @@
-package com.develop.bookstore.defalut.entity;
+package com.develop.bookstore.global.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

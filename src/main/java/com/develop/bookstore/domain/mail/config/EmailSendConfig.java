@@ -1,22 +1,25 @@
-package com.develop.bookstore.member.login.config;
+package com.develop.bookstore.domain.mail.config;
 
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
-public class MailSendConfig {
+public class EmailSendConfig {
 
     @Value("${spring.mail.username}")
-    private static String sendEmailName;
+    private String sendEmailName;
     @Value("${spring.mail.password}")
-    private static String sendEmailPw;
+    private String sendEmailPw;
+    @Value("${spring.mail.host}")
+    private String sendEmailHost;
+    @Value("${spring.mail.port}")
+    private int sendEmailPort;
 
-    @Bean(name="mailSender")
-    public JavaMailSender getJavaMailSender() {
+    @Bean(name = "mailSender")
+    public JavaMailSenderImpl getJavaMailSender() {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", true);
         properties.put("mail.transport.protocol", "smtp");
@@ -25,12 +28,13 @@ public class MailSendConfig {
         properties.put("mail.debug", true);
 
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setHost(sendEmailHost);
+        mailSender.setPort(sendEmailPort);
         mailSender.setUsername(sendEmailName);
         mailSender.setPassword(sendEmailPw);
         mailSender.setDefaultEncoding("utf-8");
         mailSender.setJavaMailProperties(properties);
+//        mailSender.setProtocol("smtps"); 네이버로 할시 활성화
 
         return mailSender;
     }

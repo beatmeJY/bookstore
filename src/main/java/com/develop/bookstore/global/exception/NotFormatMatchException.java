@@ -1,4 +1,4 @@
-package com.develop.bookstore.defalut.exception;
+package com.develop.bookstore.global.exception;
 
 public class NotFormatMatchException extends RuntimeException {
 

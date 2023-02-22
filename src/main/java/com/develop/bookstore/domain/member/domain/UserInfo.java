@@ -1,15 +1,18 @@
-package com.develop.bookstore.member.user;
+package com.develop.bookstore.domain.member.domain;
 
-import com.develop.bookstore.member.user.staticdata.ELoginPlatform;
-import com.develop.bookstore.defalut.entity.DefaultEntity;
-import com.develop.bookstore.defalut.exception.NotFormatMatchException;
+import com.develop.bookstore.global.entity.DefaultEntity;
+import com.develop.bookstore.global.exception.NotFormatMatchException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,27 +21,18 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 @Entity
-@Table(name = "member_user")
+@Table(name = "member_user_info")
 @Getter @Setter
 @NoArgsConstructor
-public class User extends DefaultEntity {
+public class UserInfo extends DefaultEntity {
 
-    // 사용자 ID
+    // 유저 정보 ID.
     @Id
-    @Column
-    private String userId;
+    private String userInfoId;
 
     // 사용자 이름
     @Column(nullable = false)
     private String userName;
-
-    // 사용자 이름
-    @Column(nullable = false)
-    private String nickName;
-
-    // 비밀번호
-    @Column(nullable = false)
-    private String password;
 
     // 생년
     @Column(nullable = false)
@@ -55,71 +49,64 @@ public class User extends DefaultEntity {
     @Getter(AccessLevel.PRIVATE)
     private Integer birthDay;
 
+    // 성별
+    @Column(nullable = false, length = 2)
+    @Enumerated(EnumType.STRING)
+    private EGender eGender;
+
+    // 연락처
+    @Column(nullable = false, length = 15)
+    private String contact;
+
+    // 이메일 인증여부
+    @Column(nullable = false, length = 1)
+    private String contactSignYn;
+
     // 이메일
-    @Column
+    @Column(nullable = false, length = 100)
     private String email;
 
-    // 성별
-    @Column
-    private String gender;
-
-    // 주소
-    @Column
-    private String address;
-
-    // 상세주소
-    @Column
-    private String addressDetail;
-
-    // 전화번호 처음자리
-    @Column
-    @Getter(AccessLevel.PRIVATE)
-    private String phoneNumber1;
-
-    // 전화번호 중간자리
-    @Column
-    @Getter(AccessLevel.PRIVATE)
-
-    private String phoneNumber2;
-
-    // 전화번호 끝자리
-    @Column
-    @Getter(AccessLevel.PRIVATE)
-    private String phoneNumber3;
+    // 이메일 인증여부
+    @Column(nullable = false, length = 1)
+    private String emailSignYn;
 
     // 가입 플랫폼
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private ELoginPlatform eLoginPlatform;
 
-    /**
-     * 전체 생성자
-     */
-    public User(String userId, String userName, String nickName, String email, String password, String gender, Integer birthDay, String phoneNumber,
-            String address, String addressDetail, ELoginPlatform eLoginPlatform) {
-        this.userId = userId;
-        this.userName = userName;
-        this.nickName = nickName;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-        this.addressDetail = addressDetail;
-        this.gender = gender;
-        this.eLoginPlatform = eLoginPlatform;
-        setBirthDay(birthDay);
-        setPhoneNumber(phoneNumber);
-    }
+    // 사용자 No.
+    @OneToOne
+    @JoinColumn(name = "user_no", nullable = false)
+    private User user;
+
+
+    // 집 주소 ID
+    @OneToOne
+    @JoinColumn(name = "address_id", nullable = true)
+    private UserAddress homeAddress;
+
+    @OneToMany(mappedBy = "userInfo")
+    private List<UserInfoAuthKey> userInfoAuthKey;
+
 
     /**
-     * 필수 값 생성자
+     * 생성자
      */
-    public User(String userId, String userName, String nickName, String password, Integer birthDay, ELoginPlatform eLoginPlatform) {
-        this.userId = userId;
+    public UserInfo(String userInfoId, User user, UserAddress homeAddress, String userName, Integer birthYear, Integer birthMonth, Integer birthDay, EGender eGender, String contact, String contactSignYn, String email, String emailSignYn,
+        ELoginPlatform eLoginPlatform) {
+
+        this.userInfoId = userInfoId;
+        this.user = user;
+        this.homeAddress = homeAddress;
         this.userName = userName;
-        this.nickName = nickName;
-        this.password = password;
+        this.eGender = eGender;
+        this.contactSignYn = contactSignYn;
+        this.email = email;
+        this.emailSignYn = emailSignYn;
         this.eLoginPlatform = eLoginPlatform;
         setBirthDay(birthDay);
+        setPhoneNumber(contact);
     }
 
     // 이후 생일은 변경 불가.
@@ -144,23 +131,20 @@ public class User extends DefaultEntity {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        if (StringUtils.hasText(phoneNumber)) {
-            String[] phoneNumSplit = phoneNumber.split("-");
-            for (String s : phoneNumSplit) {
-                try {
-                    Integer.parseInt(s);
-                } catch (NumberFormatException e) {
-                    throw new NotFormatMatchException("전화번호 양식이 올바르지 않습니다.");
-                }
-            }
+        if (!StringUtils.hasText(phoneNumber)) throw new NotFormatMatchException("전화번호가 비어있습니다.");
+        StringBuilder result = new StringBuilder();
 
-            if (phoneNumSplit.length != 3) {
+        String[] phoneNumSplit = phoneNumber.split("-");
+        if (phoneNumSplit.length > 3) throw new NotFormatMatchException("전화번호 양식이 올바르지 않습니다.");
+
+        for (String s : phoneNumSplit) {
+            try {
+                Integer.parseInt(s);
+            } catch (NumberFormatException e) {
                 throw new NotFormatMatchException("전화번호 양식이 올바르지 않습니다.");
             }
-            this.phoneNumber1 = phoneNumSplit[0];
-            this.phoneNumber2 = phoneNumSplit[1];
-            this.phoneNumber3 = phoneNumSplit[2];
         }
+        this.contact = phoneNumber;
     }
 
     public int getAge() {
@@ -177,10 +161,4 @@ public class User extends DefaultEntity {
         return result + 1;
     }
 
-    public String getPhoneNumber() {
-        if (!ObjectUtils.isEmpty(phoneNumber1) && !ObjectUtils.isEmpty(phoneNumber2) && !ObjectUtils.isEmpty(phoneNumber3)) {
-            return phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
-        }
-        return null;
-    }
 }

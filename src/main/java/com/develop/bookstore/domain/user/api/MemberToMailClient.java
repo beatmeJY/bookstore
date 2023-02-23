@@ -1,6 +1,6 @@
-package com.develop.bookstore.domain.member.api;
+package com.develop.bookstore.domain.user.api;
 
-import com.develop.bookstore.domain.member.dto.EmailAuthDTO;
+import com.develop.bookstore.domain.user.dto.EmailAuthDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(url = "${interface.mail.url}", name="testClient")
 public interface MemberToMailClient {
 
-    @PostMapping(value = "/sendAuthMail", consumes = { MediaType.APPLICATION_JSON_VALUE })
-    void sendAuthMail(EmailAuthDTO emailAuthDTO);
+    @PostMapping(value = "/sendMail", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    void sendMail(EmailAuthDTO emailAuthDTO);
 
 }

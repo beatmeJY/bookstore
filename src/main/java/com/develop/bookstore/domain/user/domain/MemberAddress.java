@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.member.domain;
+package com.develop.bookstore.domain.user.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "member_user_address")
+@Table(name = "user_member_address")
 @Getter @Setter
 @NoArgsConstructor
-public class UserAddress {
+public class MemberAddress {
 
     // 주소 ID
     @Id
@@ -39,9 +39,9 @@ public class UserAddress {
 
     // 유저 정보
     @ManyToOne
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @JoinColumn(name = "member_no", nullable = false)
+    private Member member;
 
     @OneToOne(mappedBy = "homeAddress")
-    private UserInfo userInfo;
+    private MemberInfo memberInfo;
 }

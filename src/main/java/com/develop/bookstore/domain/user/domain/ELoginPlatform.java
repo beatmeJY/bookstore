@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.member.domain;
+package com.develop.bookstore.domain.user.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.member.domain;
+package com.develop.bookstore.domain.user.domain;
 
 import com.develop.bookstore.global.entity.DefaultEntity;
 import com.develop.bookstore.global.exception.NotFormatMatchException;
@@ -21,18 +21,18 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 @Entity
-@Table(name = "member_user_info")
+@Table(name = "user_member_info")
 @Getter @Setter
 @NoArgsConstructor
-public class UserInfo extends DefaultEntity {
+public class MemberInfo extends DefaultEntity {
 
     // 유저 정보 ID.
     @Id
-    private String userInfoId;
+    private String memberInfoId;
 
     // 사용자 이름
     @Column(nullable = false)
-    private String userName;
+    private String memberName;
 
     // 생년
     @Column(nullable = false)
@@ -78,28 +78,28 @@ public class UserInfo extends DefaultEntity {
     // 사용자 No.
     @OneToOne
     @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    private Member member;
 
 
     // 집 주소 ID
     @OneToOne
     @JoinColumn(name = "address_id", nullable = true)
-    private UserAddress homeAddress;
+    private MemberAddress homeAddress;
 
-    @OneToMany(mappedBy = "userInfo")
-    private List<UserInfoAuthKey> userInfoAuthKey;
+    @OneToMany(mappedBy = "memberInfo")
+    private List<MemberInfoAuthKey> memberInfoAuthKey;
 
 
     /**
      * 생성자
      */
-    public UserInfo(String userInfoId, User user, UserAddress homeAddress, String userName, Integer birthYear, Integer birthMonth, Integer birthDay, EGender eGender, String contact, String contactSignYn, String email, String emailSignYn,
+    public MemberInfo(String memberInfoId, Member member, MemberAddress homeAddress, String memberName, Integer birthYear, Integer birthMonth, Integer birthDay, EGender eGender, String contact, String contactSignYn, String email, String emailSignYn,
         ELoginPlatform eLoginPlatform) {
 
-        this.userInfoId = userInfoId;
-        this.user = user;
+        this.memberInfoId = memberInfoId;
+        this.member = member;
         this.homeAddress = homeAddress;
-        this.userName = userName;
+        this.memberName = memberName;
         this.eGender = eGender;
         this.contactSignYn = contactSignYn;
         this.email = email;

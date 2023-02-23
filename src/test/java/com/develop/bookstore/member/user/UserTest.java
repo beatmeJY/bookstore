@@ -1,13 +1,5 @@
 package com.develop.bookstore.member.user;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.develop.bookstore.domain.member.domain.User;
-import com.develop.bookstore.domain.member.domain.ELoginPlatform;
-import com.develop.bookstore.global.exception.NotFormatMatchException;
-import java.time.LocalDate;
-import org.junit.jupiter.api.Test;
-
 class UserTest {
 
 //    @Test

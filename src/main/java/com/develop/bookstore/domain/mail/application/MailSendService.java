@@ -1,6 +1,6 @@
 package com.develop.bookstore.domain.mail.application;
 
-import com.develop.bookstore.domain.member.dto.EmailAuthDTO;
+import com.develop.bookstore.domain.user.dto.EmailAuthDTO;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -24,7 +24,7 @@ public class MailSendService {
         //인증메일 보내기
         MimeMessage mail = mailSender.createMimeMessage();
         String mailContent = "<h1>[이메일 인증]</h1><br><p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>"
-            + "<a href='http://localhost:8080/email/keyAuth="
+            + "<a href='http://localhost:8080/member/checkByKeyAuth="
             + emailAuthDTO.email() + "&authKey=" + authKey + "' target='_blenk'>이메일 인증 확인</a>";
 
         try {

@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.member.domain;
+package com.develop.bookstore.domain.user.domain;
 
 import com.develop.bookstore.global.entity.DefaultEntity;
 import jakarta.persistence.Column;
@@ -13,27 +13,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "member_user")
+@Table(name = "user_member")
 @Getter @Setter
 @NoArgsConstructor
-public class User extends DefaultEntity {
+public class Member extends DefaultEntity {
 
     // 사용자 No.
     @Id
-    private String userNo;
+    private String memberNo;
 
     // 사용자 ID.
     @Column(nullable = false)
-    private String userId;
+    private String memberId;
 
     // 닉네임.
     @Column(nullable = false)
     private String nickName;
 
 
-    @OneToOne(mappedBy = "user")
-    private UserInfo userInfo;
+    @OneToOne(mappedBy = "member")
+    private MemberInfo memberInfo;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserAddress> userAddress;
+    @OneToMany(mappedBy = "member")
+    private List<MemberAddress> userAddress;
 }

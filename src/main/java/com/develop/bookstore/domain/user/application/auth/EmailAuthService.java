@@ -1,7 +1,8 @@
-package com.develop.bookstore.domain.member.application.auth;
+package com.develop.bookstore.domain.user.application.auth;
 
-import com.develop.bookstore.domain.member.api.MemberToMailClient;
-import com.develop.bookstore.domain.member.dto.EmailAuthDTO;
+import com.develop.bookstore.domain.user.api.MemberToMailClient;
+import com.develop.bookstore.domain.user.dto.EmailAuthDTO;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,9 @@ public class EmailAuthService {
 
     // 메일 전송
     public void sendAuthMail(EmailAuthDTO emailAuthDTO) {
-        memberToMailClient.sendAuthMail(emailAuthDTO);
+        String authKey = UUID.randomUUID().toString();
+
+        memberToMailClient.sendMail(emailAuthDTO);
     }
 
     // 메일 인증키 적합 여부 판단.

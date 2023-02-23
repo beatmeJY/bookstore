@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.member.domain;
+package com.develop.bookstore.domain.user.domain;
 
 import com.develop.bookstore.global.entity.DefaultEntity;
 import jakarta.persistence.Column;
@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "member_user_info_auth_key")
+@Table(name = "user_member_info_auth_key")
 @Getter @Setter
 @NoArgsConstructor
-public class UserInfoAuthKey extends DefaultEntity {
+public class MemberInfoAuthKey extends DefaultEntity {
 
     // 인증키
     @Id
@@ -43,7 +43,7 @@ public class UserInfoAuthKey extends DefaultEntity {
     private String authCompleteYn;
 
     @ManyToOne
-    @JoinColumn(name = "user_info_id")
-    private UserInfo userInfo;
+    @JoinColumn(name = "member_info_id")
+    private MemberInfo memberInfo;
 
 }

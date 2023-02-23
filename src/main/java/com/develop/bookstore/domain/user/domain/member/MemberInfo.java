@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.user.domain;
+package com.develop.bookstore.domain.user.domain.member;
 
 import com.develop.bookstore.global.entity.DefaultEntity;
 import com.develop.bookstore.global.exception.NotFormatMatchException;

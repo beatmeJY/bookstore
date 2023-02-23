@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.user.domain;
+package com.develop.bookstore.domain.user.domain.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

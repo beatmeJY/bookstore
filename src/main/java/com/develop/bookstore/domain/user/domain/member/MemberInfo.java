@@ -1,12 +1,12 @@
 package com.develop.bookstore.domain.user.domain.member;
 
+import com.develop.bookstore.domain.user.exception.UserRegistFailedException;
 import com.develop.bookstore.global.entity.DefaultEntity;
-import com.develop.bookstore.global.exception.NotFormatMatchException;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -20,15 +20,12 @@ import lombok.Setter;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+@AttributeOverride(name = "id", column = @Column(name = "member_info_id"))
 @Entity
 @Table(name = "user_member_info")
 @Getter @Setter
 @NoArgsConstructor
 public class MemberInfo extends DefaultEntity {
-
-    // 유저 정보 ID.
-    @Id
-    private String memberInfoId;
 
     // 사용자 이름
     @Column(nullable = false)
@@ -50,7 +47,7 @@ public class MemberInfo extends DefaultEntity {
     private Integer birthDay;
 
     // 성별
-    @Column(nullable = false, length = 2)
+    @Column(nullable = false, length = 5)
     @Enumerated(EnumType.STRING)
     private EGender eGender;
 
@@ -93,28 +90,30 @@ public class MemberInfo extends DefaultEntity {
     /**
      * 생성자
      */
-    public MemberInfo(String memberInfoId, Member member, MemberAddress homeAddress, String memberName, Integer birthYear, Integer birthMonth, Integer birthDay, EGender eGender, String contact, String contactSignYn, String email, String emailSignYn,
-        ELoginPlatform eLoginPlatform) {
-
-        this.memberInfoId = memberInfoId;
+    public MemberInfo(Member member, String memberName, Integer birth,
+            EGender eGender, String contact, String contactSignYn, String email, String emailSignYn, ELoginPlatform eLoginPlatform, MemberAddress homeAddress) {
         this.member = member;
-        this.homeAddress = homeAddress;
         this.memberName = memberName;
         this.eGender = eGender;
         this.contactSignYn = contactSignYn;
         this.email = email;
         this.emailSignYn = emailSignYn;
         this.eLoginPlatform = eLoginPlatform;
-        setBirthDay(birthDay);
-        setPhoneNumber(contact);
+        this.homeAddress = homeAddress;
+        setBirthDay(birth);
+        setContact(contact);
     }
 
-    // 이후 생일은 변경 불가.
+    /**
+     * 생년월일 저장 로직.
+     * 첫 회원 등록 이후 생일은 변경 불가.
+     * @param birthDay
+     */
     private void setBirthDay(Integer birthDay) {
-        if (ObjectUtils.isEmpty(birthDay)) throw new NotFormatMatchException("생년월일이 존재 하지 않습니다.");
+        if (ObjectUtils.isEmpty(birthDay)) throw new UserRegistFailedException("생년월일이 존재 하지 않습니다.");
 
         String stringBirthDay = birthDay.toString();
-        if (stringBirthDay.length() != 8) throw new NotFormatMatchException("생년월일이 정보가 올바르지 않습니다.");
+        if (stringBirthDay.length() != 8) throw new UserRegistFailedException("생년월일이 정보가 올바르지 않습니다.");
 
         LocalDate birthDayLocal = LocalDate.now();
         birthDayLocal = birthDayLocal.withYear(Integer.parseInt(stringBirthDay.substring(0, 4)));
@@ -122,7 +121,7 @@ public class MemberInfo extends DefaultEntity {
         birthDayLocal = birthDayLocal.withDayOfMonth(Integer.parseInt(stringBirthDay.substring(6)));
 
         if (LocalDate.now().isBefore(birthDayLocal)) {
-            throw new NotFormatMatchException("아직 태어나지 않은 사람 입니다.");
+            throw new UserRegistFailedException("아직 태어나지 않은 사람 입니다.");
         }
 
         this.birthYear = birthDayLocal.getYear();
@@ -130,23 +129,31 @@ public class MemberInfo extends DefaultEntity {
         this.birthDay = birthDayLocal.getDayOfMonth();
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        if (!StringUtils.hasText(phoneNumber)) throw new NotFormatMatchException("전화번호가 비어있습니다.");
+    /**
+     * 전화번호 저장 로직.
+     * @param phoneNumber
+     */
+    public void setContact(String phoneNumber) {
+        if (!StringUtils.hasText(phoneNumber)) throw new UserRegistFailedException("전화번호가 비어있습니다.");
         StringBuilder result = new StringBuilder();
 
         String[] phoneNumSplit = phoneNumber.split("-");
-        if (phoneNumSplit.length > 3) throw new NotFormatMatchException("전화번호 양식이 올바르지 않습니다.");
+        if (phoneNumSplit.length > 3) throw new UserRegistFailedException("전화번호 양식이 올바르지 않습니다.");
 
         for (String s : phoneNumSplit) {
             try {
                 Integer.parseInt(s);
             } catch (NumberFormatException e) {
-                throw new NotFormatMatchException("전화번호 양식이 올바르지 않습니다.");
+                throw new UserRegistFailedException("전화번호 양식이 올바르지 않습니다.");
             }
         }
         this.contact = phoneNumber;
     }
 
+    /**
+     * 나이 꺼내기.
+     * @return
+     */
     public int getAge() {
         LocalDate localDate = LocalDate.now();
         int result = localDate.getYear() - getBirthYear();

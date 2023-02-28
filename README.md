@@ -1,3 +1,7 @@
+230227
+1. 수기로 작성한 Exception 핸들러 작성(예외처리 시 사용자 에러는 400 에러로 Resolver를 통해 변환할 것임.) 
+2. Member, MemberInfo 테스트 로직 변경. 
+
 230223
 1. user -> member 로 변경 / 패키지명 member -> user 로 변경 (user를 도메인으로 둠으로써 로그인 등도 포함 시키기 위함)
 

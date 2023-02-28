@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -25,6 +26,7 @@ import org.springframework.util.StringUtils;
 @Table(name = "user_member_info")
 @Getter @Setter
 @NoArgsConstructor
+@Slf4j
 public class MemberInfo extends DefaultEntity {
 
     // 사용자 이름
@@ -121,6 +123,7 @@ public class MemberInfo extends DefaultEntity {
         birthDayLocal = birthDayLocal.withDayOfMonth(Integer.parseInt(stringBirthDay.substring(6)));
 
         if (LocalDate.now().isBefore(birthDayLocal)) {
+            log.error("아직 태어나지 않은 사람 입니다.");
             throw new UserRegistFailedException("아직 태어나지 않은 사람 입니다.");
         }
 
@@ -138,12 +141,13 @@ public class MemberInfo extends DefaultEntity {
         StringBuilder result = new StringBuilder();
 
         String[] phoneNumSplit = phoneNumber.split("-");
-        if (phoneNumSplit.length > 3) throw new UserRegistFailedException("전화번호 양식이 올바르지 않습니다.");
+        if (phoneNumSplit.length != 3) throw new UserRegistFailedException("전화번호 양식이 올바르지 않습니다.");
 
         for (String s : phoneNumSplit) {
             try {
                 Integer.parseInt(s);
             } catch (NumberFormatException e) {
+                log.error("전화번호 양식이 올바르지 않습니다.");
                 throw new UserRegistFailedException("전화번호 양식이 올바르지 않습니다.");
             }
         }

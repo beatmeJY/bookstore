@@ -1,6 +1,6 @@
 package com.develop.bookstore.domain.mail.application;
 
-import com.develop.bookstore.domain.user.dto.EmailAuthDTO;
+import com.develop.bookstore.domain.user.dto.auth.EmailAuthDTO;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;

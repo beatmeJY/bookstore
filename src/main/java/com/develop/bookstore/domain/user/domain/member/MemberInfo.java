@@ -1,5 +1,6 @@
 package com.develop.bookstore.domain.user.domain.member;
 
+import com.develop.bookstore.domain.user.domain.auth.MemberInfoAuthKey;
 import com.develop.bookstore.domain.user.exception.UserRegistFailedException;
 import com.develop.bookstore.global.entity.DefaultEntity;
 import jakarta.persistence.AttributeOverride;

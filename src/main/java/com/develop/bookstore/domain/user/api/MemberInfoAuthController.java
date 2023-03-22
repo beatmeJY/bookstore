@@ -1,7 +1,8 @@
 package com.develop.bookstore.domain.user.api;
 
 import com.develop.bookstore.domain.user.application.auth.EmailAuthService;
-import com.develop.bookstore.domain.user.dto.EmailAuthDTO;
+import com.develop.bookstore.domain.user.dto.auth.EmailAuthDTO;
+import com.develop.bookstore.domain.user.dto.member.MemberInfoDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,9 +20,9 @@ public class MemberInfoAuthController {
     private final EmailAuthService emailAuthService;
 
     @RequestMapping("/sendAuthMail")
-    public void sendAuthMail(@RequestBody EmailAuthDTO emailAuthDTO){
-        log.info("emailAuthDTO : {} ", emailAuthDTO);
-        emailAuthService.sendAuthMail(emailAuthDTO);
+    public void sendAuthMail(@RequestBody MemberInfoDTO memberInfoDTO){
+        log.info("sendAuthMail memberInfoDTO : {} ", memberInfoDTO.toString());
+        emailAuthService.sendAuthMail(memberInfoDTO);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/checkByKeyAuth")

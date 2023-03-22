@@ -1,7 +1,7 @@
 package com.develop.bookstore.domain.mail.api;
 
 import com.develop.bookstore.domain.mail.application.MailSendService;
-import com.develop.bookstore.domain.user.dto.EmailAuthDTO;
+import com.develop.bookstore.domain.user.dto.auth.EmailAuthDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;

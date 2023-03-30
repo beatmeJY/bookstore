@@ -8,4 +8,6 @@ spring:
     password: #비밀번호
     driver-class-name: org.postgresql.Driver
 
-
+interface:
+  mail:
+    url: # mail 도메인 주소

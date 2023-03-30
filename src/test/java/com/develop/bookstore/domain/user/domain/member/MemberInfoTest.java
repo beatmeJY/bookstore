@@ -3,7 +3,7 @@ package com.develop.bookstore.domain.user.domain.member;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.develop.bookstore.domain.user.exception.UserRegistFailedException;
+import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,11 +31,11 @@ class MemberInfoTest {
         assertEquals(memberInfo1.getContact(),"010-3333-3333");
 
         // 잘못된 전화번호로 수정시 에러
-        assertThrows(UserRegistFailedException.class, () -> memberInfo2.setContact("01010-98494-3412-314120"));
+        assertThrows(UserInsertFailedException.class, () -> memberInfo2.setContact("01010-98494-3412-314120"));
         assertEquals(memberInfo2.getContact(),"010-2222-2222");
         
         // 잘못된 전화번호 양식일때 에러(전화번호 구분자는 "-" 이여야 함.)
-        assertThrows(UserRegistFailedException.class, () -> new MemberInfo(member3, "테스터3", 20000101, EGender.WOMAN, "01033333333", "N",
+        assertThrows(UserInsertFailedException.class, () -> new MemberInfo(member3, "테스터3", 20000101, EGender.WOMAN, "01033333333", "N",
             "test3@naver.com", "N", ELoginPlatform.NONE, null));
     }
 
@@ -43,7 +43,7 @@ class MemberInfoTest {
     @DisplayName("생년월일 저장 테스트")
     void setBirthDay() {
         // 태어나지 않은 생년월일 에러
-        assertThrows(UserRegistFailedException.class, () -> new MemberInfo(member1, "테스터1", 29990101, EGender.MAN,  "010-1111-1111", "N",
+        assertThrows(UserInsertFailedException.class, () -> new MemberInfo(member1, "테스터1", 29990101, EGender.MAN,  "010-1111-1111", "N",
             "test1@naver.com", "N", ELoginPlatform.NONE, null));
     }
 

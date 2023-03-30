@@ -1,7 +1,7 @@
 package com.develop.bookstore.domain.user.domain.member;
 
 import com.develop.bookstore.domain.user.domain.auth.MemberInfoAuthKey;
-import com.develop.bookstore.domain.user.exception.UserRegistFailedException;
+import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
 import com.develop.bookstore.global.entity.DefaultEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -113,10 +113,10 @@ public class MemberInfo extends DefaultEntity {
      * @param birthDay
      */
     private void setBirthDay(Integer birthDay) {
-        if (ObjectUtils.isEmpty(birthDay)) throw new UserRegistFailedException("생년월일이 존재 하지 않습니다.");
+        if (ObjectUtils.isEmpty(birthDay)) throw new UserInsertFailedException("생년월일이 존재 하지 않습니다.");
 
         String stringBirthDay = birthDay.toString();
-        if (stringBirthDay.length() != 8) throw new UserRegistFailedException("생년월일이 정보가 올바르지 않습니다.");
+        if (stringBirthDay.length() != 8) throw new UserInsertFailedException("생년월일이 정보가 올바르지 않습니다.");
 
         LocalDate birthDayLocal = LocalDate.now();
         birthDayLocal = birthDayLocal.withYear(Integer.parseInt(stringBirthDay.substring(0, 4)));
@@ -125,7 +125,7 @@ public class MemberInfo extends DefaultEntity {
 
         if (LocalDate.now().isBefore(birthDayLocal)) {
             log.error("아직 태어나지 않은 사람 입니다.");
-            throw new UserRegistFailedException("아직 태어나지 않은 사람 입니다.");
+            throw new UserInsertFailedException("아직 태어나지 않은 사람 입니다.");
         }
 
         this.birthYear = birthDayLocal.getYear();
@@ -138,18 +138,18 @@ public class MemberInfo extends DefaultEntity {
      * @param phoneNumber
      */
     public void setContact(String phoneNumber) {
-        if (!StringUtils.hasText(phoneNumber)) throw new UserRegistFailedException("전화번호가 비어있습니다.");
+        if (!StringUtils.hasText(phoneNumber)) throw new UserInsertFailedException("전화번호가 비어있습니다.");
         StringBuilder result = new StringBuilder();
 
         String[] phoneNumSplit = phoneNumber.split("-");
-        if (phoneNumSplit.length != 3) throw new UserRegistFailedException("전화번호 양식이 올바르지 않습니다.");
+        if (phoneNumSplit.length != 3) throw new UserInsertFailedException("전화번호 양식이 올바르지 않습니다.");
 
         for (String s : phoneNumSplit) {
             try {
                 Integer.parseInt(s);
             } catch (NumberFormatException e) {
                 log.error("전화번호 양식이 올바르지 않습니다.");
-                throw new UserRegistFailedException("전화번호 양식이 올바르지 않습니다.");
+                throw new UserInsertFailedException("전화번호 양식이 올바르지 않습니다.");
             }
         }
         this.contact = phoneNumber;

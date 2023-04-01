@@ -1,7 +1,6 @@
 package com.develop.bookstore.domain.user.api.member;
 
 import com.develop.bookstore.domain.user.application.MemberRegisterService;
-import com.develop.bookstore.domain.user.application.member.MemberService;
 import com.develop.bookstore.domain.user.dto.member.MemberRegisterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
-public class MemberControlller {
+public class MemberController {
 
     private final MemberRegisterService memberRegisterService;
 

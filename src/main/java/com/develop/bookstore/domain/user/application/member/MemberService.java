@@ -2,6 +2,8 @@ package com.develop.bookstore.domain.user.application.member;
 
 import com.develop.bookstore.domain.user.domain.member.Member;
 import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
+import com.develop.bookstore.global.exception.NoSuchEntityException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,17 @@ public class MemberService {
 
         Member member = new Member(memberId, memberName);
         return memberRepository.save(member);
+    }
+
+    public Member getMemberById(String memberId) {
+        List<Member> memberList = memberRepository.getMemberByMemberId(memberId);
+        if (CollectionUtils.isEmpty(memberList)) {
+            throw new RuntimeException("존재하지 않는 아이디 입니다.");
+        }
+        if (memberList.size() > 1) {
+            throw new RuntimeException("1:1 관계에 다중 엔티티가 존재합니다.");
+        }
+        return memberList.get(0);
     }
 
 }

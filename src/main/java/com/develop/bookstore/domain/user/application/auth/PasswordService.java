@@ -21,5 +21,10 @@ public class PasswordService {
         passwordRepository.save(passwordEntity);
     }
 
+    public Password getPasswordByMemberNo(String memberNo) {
+//        return passwordRepository
+        return null;
+    }
+
 
 }

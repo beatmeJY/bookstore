@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.user.application.auth;
+package com.develop.bookstore.domain.user.application.member;
 
 import com.develop.bookstore.domain.user.domain.member.MemberInfo;
 import com.develop.bookstore.global.exception.NoSuchEntityException;

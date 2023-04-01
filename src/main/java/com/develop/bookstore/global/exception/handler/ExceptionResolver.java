@@ -17,7 +17,7 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 		try {
 			if (ex instanceof UserInsertFailedException) {
-				log.info("UserRegistFailedException resolver to 400");
+				log.info("UserInsertFailedException resolver to 400");
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
 				return new ModelAndView();
 			}

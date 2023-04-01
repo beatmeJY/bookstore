@@ -1,5 +1,6 @@
 package com.develop.bookstore.domain.user.domain.member;
 
+import com.develop.bookstore.domain.user.domain.auth.Password;
 import com.develop.bookstore.global.entity.DefaultEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -19,14 +20,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Member extends DefaultEntity {
 
-    // 사용자 ID.
+    // 회원 ID.
     @Column(nullable = false)
     private String memberId;
 
-    // 닉네임.
+    // 회원 이름
     @Column(nullable = false)
-    private String nickName;
-
+    private String memberName;
 
     @OneToOne(mappedBy = "member")
     private MemberInfo memberInfo;
@@ -34,11 +34,14 @@ public class Member extends DefaultEntity {
     @OneToMany(mappedBy = "member")
     private List<MemberAddress> userAddress;
 
+    @OneToOne(mappedBy = "member")
+    private Password password;
+
     /**
      * 생성자
      */
-    public Member(String memberId, String nickName) {
+    public Member(String memberId, String memberName) {
         this.memberId = memberId;
-        this.nickName = nickName;
+        this.memberName = memberName;
     }
 }

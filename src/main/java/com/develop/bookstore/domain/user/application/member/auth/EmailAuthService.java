@@ -1,11 +1,12 @@
-package com.develop.bookstore.domain.user.application.auth;
+package com.develop.bookstore.domain.user.application.member.auth;
 
 import com.develop.bookstore.domain.user.api.MemberToMailClient;
-import com.develop.bookstore.domain.user.domain.auth.MemberInfoAuthKey;
+import com.develop.bookstore.domain.user.application.member.MemberInfoRepository;
 import com.develop.bookstore.domain.user.domain.member.MemberInfo;
 import com.develop.bookstore.domain.user.dto.auth.EmailAuthDTO;
 import com.develop.bookstore.domain.user.dto.member.MemberInfoDTO;
-import com.develop.bookstore.global.enumconst.YnFlag;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +24,14 @@ public class EmailAuthService {
     // 메일 전송
     @Transactional(rollbackFor = Exception.class)
     public void sendAuthMail(MemberInfoDTO memberInfoDTO) {
+        LocalDateTime nowLocalDate = LocalDateTime.now();
         String authKey = UUID.randomUUID().toString();
 
         MemberInfo memberInfoEntity = memberInfoRepository.getEntityByIdOrElseThrow(memberInfoDTO.memberInfoId());
 
-        MemberInfoAuthKey memberInfoAuthKey = new MemberInfoAuthKey(authKey, YnFlag.Y, YnFlag.N, YnFlag.N, memberInfoEntity);
+        //TODO 회원인증 테이블에서 조회해서 email 인증키 새로 발급하고 인증키 발급시간 갱신.
 
-        // 인증 메일 전송 요청 (메일 페인)
+        // 인증 메일 전송 요청 (메일 feign)
         EmailAuthDTO emailAuthDTO = new EmailAuthDTO(memberInfoDTO.email(), authKey);
         memberToMailClient.sendMail(emailAuthDTO);
     }

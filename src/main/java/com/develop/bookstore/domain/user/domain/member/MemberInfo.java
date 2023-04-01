@@ -1,6 +1,6 @@
 package com.develop.bookstore.domain.user.domain.member;
 
-import com.develop.bookstore.domain.user.domain.auth.MemberInfoAuthKey;
+import com.develop.bookstore.domain.user.domain.member.auth.MemberAuthentication;
 import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
 import com.develop.bookstore.global.entity.DefaultEntity;
 import jakarta.persistence.AttributeOverride;
@@ -9,11 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
-import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +29,9 @@ import org.springframework.util.StringUtils;
 @Slf4j
 public class MemberInfo extends DefaultEntity {
 
-    // 사용자 이름
+    // 닉네임.
     @Column(nullable = false)
-    private String memberName;
+    private String nickName;
 
     // 생년
     @Column(nullable = false)
@@ -58,17 +57,9 @@ public class MemberInfo extends DefaultEntity {
     @Column(nullable = false, length = 15)
     private String contact;
 
-    // 이메일 인증여부
-    @Column(nullable = false, length = 1)
-    private String contactSignYn;
-
     // 이메일
     @Column(nullable = false, length = 100)
     private String email;
-
-    // 이메일 인증여부
-    @Column(nullable = false, length = 1)
-    private String emailSignYn;
 
     // 가입 플랫폼
     @Column(nullable = false, length = 20)
@@ -86,21 +77,19 @@ public class MemberInfo extends DefaultEntity {
     @JoinColumn(name = "address_id", nullable = true)
     private MemberAddress homeAddress;
 
-    @OneToMany(mappedBy = "memberInfo")
-    private List<MemberInfoAuthKey> memberInfoAuthKey;
+    @OneToOne(mappedBy = "memberInfo")
+    private MemberAuthentication memberAuthentication;
 
 
     /**
      * 생성자
      */
-    public MemberInfo(Member member, String memberName, Integer birth,
-            EGender eGender, String contact, String contactSignYn, String email, String emailSignYn, ELoginPlatform eLoginPlatform, MemberAddress homeAddress) {
+    public MemberInfo(Member member, String nickName, Integer birth,
+            EGender eGender, String contact, String email, ELoginPlatform eLoginPlatform, MemberAddress homeAddress) {
         this.member = member;
-        this.memberName = memberName;
+        this.nickName = nickName;
         this.eGender = eGender;
-        this.contactSignYn = contactSignYn;
         this.email = email;
-        this.emailSignYn = emailSignYn;
         this.eLoginPlatform = eLoginPlatform;
         this.homeAddress = homeAddress;
         setBirthDay(birth);

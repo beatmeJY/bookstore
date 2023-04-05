@@ -2,10 +2,8 @@ package com.develop.bookstore.domain.user.dto.member;
 
 import com.develop.bookstore.domain.user.domain.member.EGender;
 import com.develop.bookstore.domain.user.domain.member.ELoginPlatform;
-import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
+import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import org.apache.commons.lang3.ObjectUtils;
-
-import java.util.Objects;
 
 public record MemberRegisterDTO(String memberId, String memberName, String nickName, Integer birth, EGender eGender, String contact, String email, ELoginPlatform eLoginPlatform,
         String address, String addressDetail, String postcode, String homeAddressYn, String password) {

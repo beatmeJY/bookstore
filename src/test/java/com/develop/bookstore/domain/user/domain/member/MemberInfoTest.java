@@ -3,7 +3,7 @@ package com.develop.bookstore.domain.user.domain.member;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
+import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.user.exception;
+package com.develop.bookstore.domain.user.exception.member;
 
 public class UserInsertFailedException extends RuntimeException {
 

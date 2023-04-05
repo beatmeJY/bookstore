@@ -1,9 +1,7 @@
 package com.develop.bookstore.domain.user.application.member;
 
 import com.develop.bookstore.domain.user.domain.member.Member;
-import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
-import com.develop.bookstore.global.exception.NoSuchEntityException;
-import jakarta.persistence.EntityNotFoundException;
+import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

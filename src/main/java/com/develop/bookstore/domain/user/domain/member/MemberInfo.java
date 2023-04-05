@@ -1,7 +1,7 @@
 package com.develop.bookstore.domain.user.domain.member;
 
 import com.develop.bookstore.domain.user.domain.member.auth.MemberAuthentication;
-import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
+import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import com.develop.bookstore.global.entity.DefaultEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;

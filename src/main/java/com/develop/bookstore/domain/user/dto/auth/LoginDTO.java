@@ -1,6 +1,6 @@
 package com.develop.bookstore.domain.user.dto.auth;
 
-import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
+import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import org.apache.commons.lang3.ObjectUtils;
 
 public record LoginDTO(String memberId, String password) {

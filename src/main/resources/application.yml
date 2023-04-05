@@ -42,3 +42,7 @@ logging:
             sql: trace
 server:
   port: 8080
+  servlet:
+    session:
+      tracking-modes: cookie
+      timeout: 1800 # 세션 유지 시간 (60 = 1분)

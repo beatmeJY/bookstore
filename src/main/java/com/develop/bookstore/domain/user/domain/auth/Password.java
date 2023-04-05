@@ -1,12 +1,14 @@
 package com.develop.bookstore.domain.user.domain.auth;
 
 import com.develop.bookstore.domain.user.domain.member.Member;
-import com.develop.bookstore.domain.user.exception.UserInsertFailedException;
+import com.develop.bookstore.domain.user.exception.auth.LoginFailedException;
+import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import com.develop.bookstore.global.entity.DefaultEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.regex.Pattern;
@@ -14,9 +16,9 @@ import java.util.regex.Pattern;
 @AttributeOverride(name = "id", column = @Column(name = "password_id"))
 @Entity
 @Table(name = "auth_password")
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
+@Slf4j
 public class Password extends DefaultEntity {
 
 
@@ -34,7 +36,7 @@ public class Password extends DefaultEntity {
 
         this.member = member;
         this.password = bCryptPasswordEncoder.encode(password);
-    }
+}
 
     /**
      * 비밀번호 패턴 체크. (비밀번호는 영문과 특수문자, 숫자를 포함하며 8자 이상 20자 이하 이어야 함.)
@@ -48,6 +50,9 @@ public class Password extends DefaultEntity {
 
     // 비밀번호 비교.
     public void comparePassword(String password, PasswordEncoder bCryptPasswordEncoder) {
-        bCryptPasswordEncoder.matches(password, this.password);
+        if (!bCryptPasswordEncoder.matches(password, this.password)) {
+            log.info("비밀번호 불일치");
+            throw new LoginFailedException("비밀번호가 일치하지 않습니다!");
+        }
     }
 }

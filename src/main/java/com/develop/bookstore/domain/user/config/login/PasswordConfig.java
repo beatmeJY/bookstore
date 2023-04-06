@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.user.config;
+package com.develop.bookstore.domain.user.config.login;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

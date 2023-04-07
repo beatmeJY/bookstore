@@ -3,6 +3,7 @@ package com.develop.bookstore.domain.user.domain.member;
 import com.develop.bookstore.domain.user.domain.member.auth.MemberAuthentication;
 import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import com.develop.bookstore.global.entity.DefaultEntity;
+import com.develop.bookstore.global.enumconst.YnFlag;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -65,6 +66,11 @@ public class MemberInfo extends DefaultEntity {
     @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private ELoginPlatform eLoginPlatform;
+    
+    // 운영자 여부
+    @Column(nullable = false, length = 1)
+    @Enumerated(EnumType.STRING)
+    private String admin_yn;
 
     // 사용자 No.
     @OneToOne
@@ -92,6 +98,7 @@ public class MemberInfo extends DefaultEntity {
         this.email = email;
         this.eLoginPlatform = eLoginPlatform;
         this.homeAddress = homeAddress;
+        this.admin_yn = YnFlag.N;
         setBirthDay(birth);
         setContact(contact);
     }

@@ -25,6 +25,6 @@ public class Author extends DefaultEntity {
 	@Column(nullable = false, length = 4000)
 	private String authorDescription;
 
-	@OneToOne(mappedBy = "book")
+	@OneToOne(mappedBy = "author")
 	private Book book;
 }

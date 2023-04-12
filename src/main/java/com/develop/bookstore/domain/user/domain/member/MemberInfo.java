@@ -69,7 +69,6 @@ public class MemberInfo extends DefaultEntity {
     
     // 운영자 여부
     @Column(nullable = false, length = 1)
-    @Enumerated(EnumType.STRING)
     private String admin_yn;
 
     // 사용자 No.

@@ -7,7 +7,6 @@ import com.develop.bookstore.domain.user.dto.auth.LoginDTO;
 import com.develop.bookstore.domain.user.enumconst.SessionConst;
 import com.develop.bookstore.domain.user.exception.auth.LoginFailedException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;

@@ -1,6 +1,5 @@
 package com.develop.bookstore.domain.user.application;
 
-import com.develop.bookstore.domain.user.application.auth.PasswordRepository;
 import com.develop.bookstore.domain.user.application.auth.PasswordService;
 import com.develop.bookstore.domain.user.application.member.MemberAddressService;
 import com.develop.bookstore.domain.user.application.member.MemberInfoService;

@@ -6,6 +6,7 @@ import com.develop.bookstore.domain.user.domain.member.MemberInfo;
 import com.develop.bookstore.domain.user.dto.member.MemberRegisterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class MemberInfoService {
 
 
     // 신규 회원가입시 회원정보 저장.
+    @Transactional(rollbackFor = Exception.class)
     public void registerMemberInfo(Member member, MemberAddress memberAddress, MemberRegisterDTO dto) {
         MemberInfo memberInfo = new MemberInfo(member, dto.nickName(), dto.birth(), dto.eGender(), dto.contact(), dto.email(), dto.eLoginPlatform(), memberAddress);
         memberInfoRepository.save(memberInfo);

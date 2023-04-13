@@ -17,7 +17,7 @@ public class MemberController {
     private final MemberRegisterService memberRegisterService;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler
+    @ExceptionHandler({UserInsertFailedException.class})
     public ResponseDTO userInsertFailedException(UserInsertFailedException e) {
         return new ResponseDTO(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
     }

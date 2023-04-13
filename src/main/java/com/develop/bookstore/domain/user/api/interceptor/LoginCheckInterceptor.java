@@ -21,14 +21,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
             log.info("미인증 사용자 요청");
-            //로그인으로 redirect
-            //response.sendRedirect("/login?redirectURL=" + requestURI); // 리액트로 할거기 때문에 여기선 리다이렉트 안함.
-
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "해당 서비스는 로그인이 필요합니다");
             return false;
         }
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         log.info("member 로그인 인증 완료 = {} : {}", member.getMemberId(), member.getMemberName());
-
         return true;
     }
 }

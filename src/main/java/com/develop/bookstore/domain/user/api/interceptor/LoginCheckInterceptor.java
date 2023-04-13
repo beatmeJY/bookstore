@@ -1,4 +1,4 @@
-package com.develop.bookstore.domain.user.api.auth;
+package com.develop.bookstore.domain.user.api.interceptor;
 
 import com.develop.bookstore.domain.user.domain.member.Member;
 import com.develop.bookstore.domain.user.enumconst.SessionConst;

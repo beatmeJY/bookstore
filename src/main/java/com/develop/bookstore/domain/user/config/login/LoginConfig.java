@@ -1,6 +1,6 @@
 package com.develop.bookstore.domain.user.config.login;
 
-import com.develop.bookstore.domain.user.api.auth.LoginCheckInterceptor;
+import com.develop.bookstore.domain.user.api.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

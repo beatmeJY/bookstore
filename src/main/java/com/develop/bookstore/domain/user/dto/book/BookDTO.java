@@ -2,16 +2,14 @@ package com.develop.bookstore.domain.user.dto.book;
 
 import com.develop.bookstore.domain.user.domain.book.Author;
 import com.develop.bookstore.domain.user.domain.book.Book;
-import com.develop.bookstore.domain.user.domain.member.EGender;
-import com.develop.bookstore.domain.user.domain.member.ELoginPlatform;
 import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import org.apache.commons.lang3.ObjectUtils;
 
-public record BookRegisterDTO(String bookName, String bookThumbnail, String detailImg, String trailer, Long authorNo, String translator, String publisher,
-                              Integer publicationDay, Integer originPrice, Integer price, Integer earnPoints, Integer deliveryFee, String bookGenre,
-                              String bookIntro, String index, String bookPreview, String publisherReview, Integer totalPage, Integer bookQty) {
+public record BookDTO(String bookName, String bookThumbnail, String detailImg, String trailer, Long authorNo, String translator, String publisher,
+                      Integer publicationDay, Integer originPrice, Integer price, Integer earnPoints, Integer deliveryFee, String bookGenre,
+                      String bookIntro, String index, String bookPreview, String publisherReview, Integer totalPage, Integer bookQty) {
 
-    public BookRegisterDTO {
+    public BookDTO {
         this.validation(bookName, "bookName");
         this.validation(authorNo, "authorNo");
         this.validation(publisher, "publisher");
@@ -29,6 +27,10 @@ public record BookRegisterDTO(String bookName, String bookThumbnail, String deta
         if (ObjectUtils.isEmpty(o)) {
             throw new UserInsertFailedException(name + "정보가 비어있습니다.");
         }
+    }
+
+    public Double getSalePercent() {
+        return (double) this.price() / (double) this.originPrice();
     }
 
     public Book toBookEntity(Long memberNo, Author author) {

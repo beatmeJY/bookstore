@@ -19,9 +19,15 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
+    /**
+     * PK 로 조회.
+     */
+    public Author getEntityByIdOrElseThrow(Long id) {
+        return authorRepository.getEntityByIdOrElseThrow(id);
+    }
 
     /**
-     * 저자 등록
+     * 저자 등록.
      */
     @Transactional(rollbackFor = Exception.class)
     public void addAuthor(AuthorRegisterDTO dto, Member member) {
@@ -36,6 +42,9 @@ public class AuthorService {
         authorRepository.save(author);
     }
 
+    /**
+     * 저자명으로 검색.
+     */
     public List<AuthorSearchDTO> getAuthor(String authorName) {
         List<Author> authorList = authorRepository.getAuthorByAuthorName(authorName);
         if (CollectionUtils.isEmpty(authorList)) {
@@ -43,4 +52,5 @@ public class AuthorService {
         }
         return authorList.stream().map(Author::toAuthorSearchDto).collect(Collectors.toList());
     }
+
 }

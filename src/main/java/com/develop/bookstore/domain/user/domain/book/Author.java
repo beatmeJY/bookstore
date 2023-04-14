@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AttributeOverride(name = "id", column = @Column(name = "author_no"))
 @Entity
 @Table(name = "book_author")
@@ -25,8 +27,8 @@ public class Author extends DefaultEntity {
 	private Long regMemberNo; // 등록자 NO
 	private Long modMemberNo; // 수정자 No
 
-	@OneToOne(mappedBy = "author")
-	private Book book;
+	@OneToMany(mappedBy = "author")
+	private List<Book> book;
 
 
 	public Author(String authorName, Integer authorBirth, String authorInfo, Long regMemberNo) {

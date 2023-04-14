@@ -75,12 +75,12 @@ public class Book extends DefaultEntity {
     private Integer likeNum;
     // 삭제여부
     @Column(nullable = false, length = 1)
-    private String delYn;
+    private String mainYn;
     // 등록자
     @Column(nullable = false)
     private Long memberNo;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_no", nullable = false)
     private Author author;
 
@@ -109,12 +109,12 @@ public class Book extends DefaultEntity {
         this.likeNum = likeNum;
         this.memberNo = memberNo;
         this.author = author;
-        this.delYn = YnFlag.N;
+        this.mainYn = YnFlag.N;
     }
 
     public BookSearchDTO toBookDto() {
         return new BookSearchDTO(getId(), bookName, bookThumbnail, detailImg, trailer, translator, publisher, publicationDay, originPrice, price, earnPoints, deliveryFee, bookGenre,
-                bookIntro, index, bookPreview, publisherReview, totalPage, bookQty, likeNum, delYn, author.getAuthorName());
+                bookIntro, index, bookPreview, publisherReview, totalPage, bookQty, likeNum, author.getAuthorName(), getRegDt());
     }
 
 

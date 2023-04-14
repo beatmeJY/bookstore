@@ -51,14 +51,78 @@ public class BookRepositoryImpl implements BookDslRepository {
                         book.totalPage,
                         book.bookQty,
                         book.likeNum,
-                        book.delYn,
-                        book.author.authorName
+                        book.author.authorName,
+                        book.regDt
                 ))
                 .from(book)
                 .where(
-                        book.delYn.eq(YnFlag.N),
                         builder
                 )
                 .fetch();
     }
+
+    @Override
+    public List<BookSearchDTO> getRecentBookList() {
+        return queryFactory
+                .select(new QBookSearchDTO(
+                        book.id,
+                        book.bookName,
+                        book.bookThumbnail,
+                        book.detailImg,
+                        book.trailer,
+                        book.translator,
+                        book.publisher,
+                        book.publicationDay,
+                        book.originPrice,
+                        book.price,
+                        book.earnPoints,
+                        book.deliveryFee,
+                        book.bookGenre,
+                        book.bookIntro,
+                        book.index,
+                        book.bookPreview,
+                        book.publisherReview,
+                        book.totalPage,
+                        book.bookQty,
+                        book.likeNum,
+                        book.author.authorName,
+                        book.regDt
+                ))
+                .from(book)
+                .orderBy(book.regDt.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<BookSearchDTO> getPopularBookList() {
+        return queryFactory
+                .select(new QBookSearchDTO(
+                        book.id,
+                        book.bookName,
+                        book.bookThumbnail,
+                        book.detailImg,
+                        book.trailer,
+                        book.translator,
+                        book.publisher,
+                        book.publicationDay,
+                        book.originPrice,
+                        book.price,
+                        book.earnPoints,
+                        book.deliveryFee,
+                        book.bookGenre,
+                        book.bookIntro,
+                        book.index,
+                        book.bookPreview,
+                        book.publisherReview,
+                        book.totalPage,
+                        book.bookQty,
+                        book.likeNum,
+                        book.author.authorName,
+                        book.regDt
+                ))
+                .from(book)
+                .orderBy(book.likeNum.desc())
+                .fetch();
+    }
+
 }

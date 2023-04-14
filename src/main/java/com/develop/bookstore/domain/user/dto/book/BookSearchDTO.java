@@ -4,10 +4,12 @@ import com.develop.bookstore.domain.user.domain.book.Author;
 import com.develop.bookstore.domain.user.domain.book.Book;
 import com.querydsl.core.annotations.QueryProjection;
 
+import java.time.LocalDateTime;
+
 public record BookSearchDTO(Long bookNo, String bookName, String bookThumbnail, String detailImg, String trailer, String translator, String publisher,
                             Integer publicationDay, Integer originPrice, Integer price, Integer earnPoints, Integer deliveryFee, String bookGenre,
                             String bookIntro, String index, String bookPreview, String publisherReview, Integer totalPage, Integer bookQty, Integer likeNum,
-                            String delYn, String authorName) {
+                            String authorName, LocalDateTime regDt) {
 
     @QueryProjection
     public BookSearchDTO {

@@ -3,6 +3,7 @@ package com.develop.bookstore.domain.user.api.book;
 import com.develop.bookstore.domain.user.application.book.BookManagementService;
 import com.develop.bookstore.domain.user.application.book.BookService;
 import com.develop.bookstore.domain.user.domain.member.Member;
+import com.develop.bookstore.domain.user.dto.book.BookMainSetDTO;
 import com.develop.bookstore.domain.user.dto.book.BookModifyDTO;
 import com.develop.bookstore.domain.user.dto.book.BookRegisterDTO;
 import com.develop.bookstore.domain.user.enumconst.SessionConst;
@@ -67,4 +68,34 @@ public class BookController {
         return result;
     }
 
+    // 메인 책 정보 조회
+    @GetMapping("/getMainBookInfo")
+    public ResponseDataDTO getMainBookInfo() {
+        ResponseDataDTO result = new ResponseDataDTO();
+        result.setData(bookService.getMainBookInfo());
+        return result;
+    }
+
+    // 최근 등록된 책 순서부터 목록 조회
+    @GetMapping("/getRecentBookList")
+    public ResponseDataListDTO getRecentBookList() {
+        ResponseDataListDTO result = new ResponseDataListDTO();
+        result.setData(bookService.getRecentBookList());
+        return result;
+    }
+
+    // 인기 순으로 정렬해서 조회
+    @GetMapping("/getPopularBookList")
+    public ResponseDataListDTO getPopularBookList() {
+        ResponseDataListDTO result = new ResponseDataListDTO();
+        result.setData(bookService.getPopularBookList());
+        return result;
+    }
+
+    // 메인 책 설정
+    @PostMapping("/setMainBook")
+    public ResponseDTO setMainBook(@RequestBody BookMainSetDTO dto) {
+        bookService.setMainBook(dto);
+        return new ResponseDTO();
+    }
 }

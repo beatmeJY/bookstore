@@ -9,4 +9,8 @@ import java.util.List;
 public interface BookDslRepository {
 
     public List<BookSearchDTO> getBookList(String bookName, String authorName);
+
+    List<BookSearchDTO> getRecentBookList();
+
+    List<BookSearchDTO> getPopularBookList();
 }

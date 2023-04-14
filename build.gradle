@@ -36,6 +36,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"// feign
 	implementation 'org.apache.commons:commons-lang3'
+	implementation 'org.modelmapper:modelmapper:2.4.2'
 
 //	//Querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

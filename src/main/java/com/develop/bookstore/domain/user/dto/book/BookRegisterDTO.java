@@ -2,8 +2,6 @@ package com.develop.bookstore.domain.user.dto.book;
 
 import com.develop.bookstore.domain.user.domain.book.Author;
 import com.develop.bookstore.domain.user.domain.book.Book;
-import com.develop.bookstore.domain.user.domain.member.EGender;
-import com.develop.bookstore.domain.user.domain.member.ELoginPlatform;
 import com.develop.bookstore.domain.user.exception.member.UserInsertFailedException;
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -34,6 +32,6 @@ public record BookRegisterDTO(String bookName, String bookThumbnail, String deta
     public Book toBookEntity(Long memberNo, Author author) {
         return new Book(bookName, bookThumbnail, detailImg, trailer, translator, publisher, publicationDay,
                 price, originPrice, earnPoints, deliveryFee, bookGenre, bookIntro, index, bookPreview,
-                publisherReview, totalPage, bookQty, memberNo, author);
+                publisherReview, totalPage, bookQty, 0, memberNo, author);
     }
 }

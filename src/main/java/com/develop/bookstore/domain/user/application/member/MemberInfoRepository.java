@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberInfoRepository extends JpaRepository<MemberInfo, Long> {
 
-    default MemberInfo getEntityByIdOrElseThrow(Long aLong) {
-        return findById(aLong).orElseThrow(() -> new NoSuchEntityException(MemberInfo.class));
+    default MemberInfo getEntityByIdOrElseThrow(Long id) {
+        return findById(id).orElseThrow(() -> new NoSuchEntityException("MemberInfo"));
     }
 
 

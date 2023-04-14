@@ -1,18 +1,15 @@
 package com.develop.bookstore.domain.user.domain.book;
 
-import com.develop.bookstore.domain.user.domain.auth.Password;
-import com.develop.bookstore.domain.user.domain.member.MemberAddress;
-import com.develop.bookstore.domain.user.domain.member.MemberInfo;
-import com.develop.bookstore.domain.user.dto.book.BookDTO;
-import com.develop.bookstore.domain.user.dto.book.BookRegisterDTO;
+import com.develop.bookstore.domain.user.dto.book.BookModifyDTO;
+import com.develop.bookstore.domain.user.dto.book.BookSearchDTO;
 import com.develop.bookstore.global.entity.DefaultEntity;
 import com.develop.bookstore.global.enumconst.YnFlag;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @AttributeOverride(name = "id", column = @Column(name = "book_no"))
 @Entity
@@ -77,20 +74,20 @@ public class Book extends DefaultEntity {
     @Column(nullable = false)
     private Integer likeNum;
     // 삭제여부
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1)
     private String delYn;
     // 등록자
     @Column(nullable = false)
     private Long memberNo;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_no", nullable = false)
     private Author author;
 
 
     public Book(String bookName, String bookThumbnail, String detailImg, String trailer, String translator, String publisher, Integer publicationDay,
                 Integer price, Integer originPrice, Integer earnPoints, Integer deliveryFee, String bookGenre, String bookIntro, String index, String bookPreview,
-                String publisherReview, Integer totalPage, Integer bookQty, Long memberNo, Author author) {
+                String publisherReview, Integer totalPage, Integer bookQty, Integer likeNum, Long memberNo, Author author) {
         this.bookName = bookName;
         this.bookThumbnail = bookThumbnail;
         this.detailImg = detailImg;
@@ -109,14 +106,36 @@ public class Book extends DefaultEntity {
         this.publisherReview = publisherReview;
         this.totalPage = totalPage;
         this.bookQty = bookQty;
-        this.likeNum = 0;
-        this.delYn = YnFlag.N;
+        this.likeNum = likeNum;
         this.memberNo = memberNo;
         this.author = author;
+        this.delYn = YnFlag.N;
     }
 
-    public BookDTO toBookDto() {
-        return new BookDTO(bookName, bookThumbnail, detailImg, trailer, author.getId(), translator, publisher, publicationDay, originPrice, price, earnPoints, deliveryFee, bookGenre,
-                bookIntro, index, bookPreview, publisherReview, totalPage, bookQty);
+    public BookSearchDTO toBookDto() {
+        return new BookSearchDTO(getId(), bookName, bookThumbnail, detailImg, trailer, translator, publisher, publicationDay, originPrice, price, earnPoints, deliveryFee, bookGenre,
+                bookIntro, index, bookPreview, publisherReview, totalPage, bookQty, likeNum, delYn, author.getAuthorName());
+    }
+
+
+    public void patch(BookModifyDTO dto) {
+        if (StringUtils.isNotEmpty(dto.bookName())) {this.bookName = dto.bookName();}
+        if (StringUtils.isNotEmpty(dto.bookThumbnail())) {this.bookThumbnail = dto.bookThumbnail();}
+        if (StringUtils.isNotEmpty(dto.detailImg())) {this.detailImg = dto.detailImg();}
+        if (StringUtils.isNotEmpty(dto.trailer())) {this.trailer = dto.trailer();}
+        if (StringUtils.isNotEmpty(dto.translator())) {this.translator = dto.translator();}
+        if (StringUtils.isNotEmpty(dto.publisher())) {this.publisher = dto.publisher();}
+        if (ObjectUtils.isNotEmpty(dto.publicationDay())) {this.publicationDay = dto.publicationDay();}
+        if (ObjectUtils.isNotEmpty(dto.originPrice())) {this.originPrice = dto.originPrice();}
+        if (ObjectUtils.isNotEmpty(dto.price())) {this.price = dto.price();}
+        if (ObjectUtils.isNotEmpty(dto.earnPoints())) {this.earnPoints = dto.earnPoints();}
+        if (ObjectUtils.isNotEmpty(dto.deliveryFee())) {this.deliveryFee = dto.deliveryFee();}
+        if (StringUtils.isNotEmpty(dto.bookGenre())) {this.bookGenre = dto.bookGenre();}
+        if (StringUtils.isNotEmpty(dto.bookIntro())) {this.bookIntro = dto.bookIntro();}
+        if (StringUtils.isNotEmpty(dto.index())) {this.index = dto.index();}
+        if (StringUtils.isNotEmpty(dto.bookPreview())) {this.bookPreview = dto.bookPreview();}
+        if (StringUtils.isNotEmpty(dto.publisherReview())) {this.publisherReview = dto.publisherReview();}
+        if (ObjectUtils.isNotEmpty(dto.totalPage())) {this.totalPage = dto.totalPage();}
+        if (ObjectUtils.isNotEmpty(dto.bookQty())) {this.bookQty = dto.bookQty();}
     }
 }

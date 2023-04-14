@@ -13,7 +13,7 @@ import java.util.List;
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     default Author getEntityByIdOrElseThrow(Long id) {
-        return findById(id).orElseThrow(() -> new NoSuchEntityException(Author.class));
+        return findById(id).orElseThrow(() -> new NoSuchEntityException("Author"));
     }
 
 

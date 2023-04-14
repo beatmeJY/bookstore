@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberAuthenticationRepository extends JpaRepository<MemberAuthentication, Long> {
 
-    default MemberAuthentication getEntityByIdOrElseThrow(Long aLong) {
-        return findById(aLong).orElseThrow(() -> new NoSuchEntityException(MemberAuthentication.class));
+    default MemberAuthentication getEntityByIdOrElseThrow(Long id) {
+        return findById(id).orElseThrow(() -> new NoSuchEntityException("MemberAuthentication"));
     }
 
 

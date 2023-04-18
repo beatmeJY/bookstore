@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.NumberUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -134,18 +135,10 @@ public class MemberInfo extends DefaultEntity {
      */
     public void setContact(String phoneNumber) {
         if (!StringUtils.hasText(phoneNumber)) throw new UserInsertFailedException("전화번호가 비어있습니다.");
-        StringBuilder result = new StringBuilder();
-
-        String[] phoneNumSplit = phoneNumber.split("-");
-        if (phoneNumSplit.length != 3) throw new UserInsertFailedException("전화번호 양식이 올바르지 않습니다.");
-
-        for (String s : phoneNumSplit) {
-            try {
-                Integer.parseInt(s);
-            } catch (NumberFormatException e) {
-                log.error("전화번호 양식이 올바르지 않습니다.");
-                throw new UserInsertFailedException("전화번호 양식이 올바르지 않습니다.");
-            }
+        try {
+            Long.parseLong(phoneNumber);
+        } catch (NumberFormatException e) {
+            throw new UserInsertFailedException("전화번호 양식이 올바르지 않습니다.");
         }
         this.contact = phoneNumber;
     }
